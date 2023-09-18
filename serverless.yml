@@ -2,11 +2,11 @@ service: aws-node-express-dynamodb-api-project
 frameworkVersion: "3"
 
 custom:
-  tableName: ""
-  bucketLink: ""
-  serverLink: ""
-  emailLogin: ""
-  emailPassword: ""
+  # tableName: ""
+  # bucketLink: ""
+  # serverLink: ""
+  # emailLogin: ""
+  # emailPassword: ""
 
 provider:
   name: aws
@@ -39,6 +39,10 @@ functions:
     handler: index.handler
     events:
       - httpApi: "*"
+  scheduledSendEmail:
+    handler: index.sendEmail
+    events:
+      - schedule: rate(1 day)
 
 resources:
   Resources:

@@ -53,20 +53,20 @@ app.post("/subscribe", (req, res) => {
   }
 });
 //Work
-app.post("/sendEmail", async (req, res) => {
-  try {
-    const subs = await getSubs();
-    await transporter.sendMail({
-      to: subs,
-      from: process.env.EMAIL_LOGIN,
-      text: "Get Inspired Today",
-      html: createEmailHTML(await getQuote()),
-    });
-    res.status(200).json({ message: "ok" });
-  } catch (err) {
-    serverError(res, err);
-  }
-});
+// app.post("/sendEmail", async (req, res) => {
+//   try {
+//     const subs = await getSubs();
+//     await transporter.sendMail({
+//       to: subs,
+//       from: process.env.EMAIL_LOGIN,
+//       text: "Get Inspired Today",
+//       html: createEmailHTML(await getQuote()),
+//     });
+//     res.status(200).json({ message: "ok" });
+//   } catch (err) {
+//     serverError(res, err);
+//   }
+// });
 //Work
 app.get("/getSubscribers", async (req, res) => {
   try {
@@ -86,5 +86,21 @@ app.use((req, res, next) => {
     error: "Not Found",
   });
 });
+const sendEmail = async () => {
+  try {
+    const subs = await getSubs();
+    await transporter.sendMail({
+      to: subs,
+      from: process.env.EMAIL_LOGIN,
+      text: "Get Inspired Today",
+      html: createEmailHTML(await getQuote()),
+    });
+  } catch (err) {
+    console.log("Error:", err);
+  }
+};
 
-module.exports.handler = serverless(app);
+module.exports = {
+  handler: serverless(app),
+  sendEmail,
+};
