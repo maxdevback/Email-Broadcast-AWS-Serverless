@@ -37,6 +37,10 @@ app.get("/quotes", (req, res) => {
 app.post("/subscribe", (req, res) => {
   const currentTime = new Date().getTime();
   try {
+    if (!req.body.email || typeof req.body.email !== "string")
+      return res
+        .status(400)
+        .json({ message: "Email is missing or not of the correct type" });
     const params = {
       TableName: USERS_TABLE,
       Item: {

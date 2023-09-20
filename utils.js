@@ -56,8 +56,8 @@ const getSubs = async () => {
 //Work
 const getQuote = async () => {
   const getQuotes = await axios.get(process.env.SERVER_LINK + "/quotes");
-  var length = getQuotes.data.quotes.length;
-  var randomQuote = getQuotes.data.quotes[Math.floor(Math.random() * length)];
+  const length = getQuotes.data.quotes.length;
+  const randomQuote = getQuotes.data.quotes[Math.floor(Math.random() * length)];
 
   return randomQuote;
 };
